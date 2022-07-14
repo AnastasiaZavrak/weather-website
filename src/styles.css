@@ -1,0 +1,44 @@
+h1,
+h2,
+h5,
+p {
+  text-align: center;
+  color: #00092c;
+}
+
+h1 {
+  color: #e45826;
+}
+
+h2 {
+  color: #df450d;
+  font-size: 50px;
+  margin: 0;
+}
+
+h5 {
+  font-size: 13px;
+  font-weight: normal;
+  opacity: 50%;
+}
+
+p {
+  margin: 25px;
+  font-size: 20px;
+  font-weight: normal;
+  opacity: 80%;
+}
+
+.container {
+  margin-top: 40px;
+}
+
+div.weather-table {
+  margin-top: 80px;
+  font-size: 20px;
+}
+
+#cel-far {
+  font-size: 20px;
+  vertical-align: super;
+}
