@@ -42,3 +42,20 @@ div.weather-table {
   font-size: 20px;
   vertical-align: super;
 }
+
+p #desc::first-letter {
+  text-transform: capitalize !important;
+}
+
+span#desc {
+  display: block;
+}
+
+.desc {
+  margin-bottom: 0;
+}
+
+#icon {
+  display: block;
+  margin: 0 auto;
+}

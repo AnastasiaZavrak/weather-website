@@ -1,22 +1,26 @@
-// import axios from "axios";
+function formatDate(timeInMilliseconds) {
+  let date = new Date(timeInMilliseconds);
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  let hours = date.getHours();
+  let mins = date.getMinutes();
+  let day = days[date.getDay()];
 
-let now = new Date();
-let time = document.querySelector("#currTime");
-let days = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
-let day = days[now.getDay()];
-let hoursMins = now.toLocaleTimeString([], {
-  hour: "2-digit",
-  minute: "2-digit",
-});
-time.innerHTML = day + ", " + hoursMins;
+  if (hours < 10) {
+    hours = `0${hours}`;
+  }
+  if (mins < 10) {
+    mins = `0${mins}`;
+  }
+  return `${day}, ${hours}:${mins}`;
+}
 
 function searchLocation(position) {
   let lat = position.coords.latitude;
@@ -48,7 +52,18 @@ function displayWeather(response) {
   document.querySelector("#wind-speed").innerHTML = Math.round(
     response.data.wind.speed
   );
-  document.querySelector("#desc").innerHTML = response.data.weather[0].main;
+  document.querySelector("#desc").innerHTML =
+    response.data.weather[0].description;
+  console.log(response.data);
+  document.querySelector("#currTime").innerHTML = formatDate(
+    response.data.dt * 1000
+  );
+  document
+    .querySelector("#icon")
+    .setAttribute(
+      "src",
+      `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+    );
 }
 
 function searchCity(city) {
