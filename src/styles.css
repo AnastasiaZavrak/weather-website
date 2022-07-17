@@ -76,3 +76,9 @@ span#desc {
 #cel-far .active:hover {
   text-decoration: none;
 }
+
+.row {
+  margin: 0 auto;
+  text-align: center;
+  max-width: 60%;
+}
