@@ -59,3 +59,20 @@ span#desc {
   display: block;
   margin: 0 auto;
 }
+
+#celsius-temp {
+  opacity: 50%;
+}
+#fahr-temp {
+  opacity: 50%;
+}
+#cel-far .active {
+  color: #df450d;
+  opacity: 100%;
+  cursor: default;
+  text-decoration: none;
+}
+
+#cel-far .active:hover {
+  text-decoration: none;
+}
