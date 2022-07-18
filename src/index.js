@@ -72,8 +72,6 @@ function displayWeather(response) {
   document
     .querySelector("#icon")
     .setAttribute("alt", response.data.weather[0].description);
-  // displayForecast();
-
   getForecast(response.data.coord);
 }
 
@@ -86,22 +84,6 @@ function findCityWeather(event) {
   event.preventDefault();
   let city = document.querySelector("#search-city").value;
   searchCity(city);
-}
-
-function displayFahrTemp(event) {
-  event.preventDefault();
-  celsius.classList.remove("active");
-  fahrenheit.classList.add("active");
-  let fahrenheitTemp = (celsiusTemperature * 9) / 5 + 32;
-  document.querySelector("#temperature").innerHTML = Math.round(fahrenheitTemp);
-}
-
-function displayCelsiusTemp(event) {
-  event.preventDefault();
-  celsius.classList.add("active");
-  fahrenheit.classList.remove("active");
-  document.querySelector("#temperature").innerHTML =
-    Math.round(celsiusTemperature);
 }
 
 function formatForecastDay(time) {
@@ -141,8 +123,6 @@ function displayForecast(response) {
 
 let apiKey = "0cbaf29abb695f5e4a49d0ed30f00cdc";
 
-let celsiusTemperature = null;
-
 let form = document.querySelector(".search_input");
 form.addEventListener("submit", findCityWeather);
 
@@ -150,9 +130,3 @@ searchCity("New York");
 
 let myLoc = document.querySelector("#my-loc");
 myLoc.addEventListener("click", myLocTemp);
-
-let fahrenheit = document.querySelector("#fahr-temp");
-fahrenheit.addEventListener("click", displayFahrTemp);
-
-let celsius = document.querySelector("#celsius-temp");
-celsius.addEventListener("click", displayCelsiusTemp);
