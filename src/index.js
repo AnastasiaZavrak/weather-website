@@ -36,6 +36,12 @@ function myLocTemp(event) {
   event.preventDefault();
   navigator.geolocation.getCurrentPosition(searchLocation);
 }
+
+function getForecast(coords) {
+  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coords.lat}&lon=${coords.lon}&appid=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(displayForecast);
+}
+
 function displayWeather(response) {
   celsiusTemperature = response.data.main.temp;
   console.log(response.data);
@@ -66,12 +72,12 @@ function displayWeather(response) {
   document
     .querySelector("#icon")
     .setAttribute("alt", response.data.weather[0].description);
+  // displayForecast();
 
-  displayForecast();
+  getForecast(response.data.coord);
 }
 
 function searchCity(city) {
-  let apiKey = "0cbaf29abb695f5e4a49d0ed30f00cdc";
   let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
   axios.get(url).then(displayWeather);
 }
@@ -98,29 +104,42 @@ function displayCelsiusTemp(event) {
     Math.round(celsiusTemperature);
 }
 
-function displayForecast() {
+function formatForecastDay(time) {
+  let date = new Date(time * 1000);
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  let day = date.getDay();
+  return days[day];
+}
+
+function displayForecast(response) {
+  let forecast = response.data.daily;
   let forecastElement = document.querySelector("#weather-forecast-table");
   let forecastHTML = `<div class="row">`;
-  let days = ["Mon", "Tue", "Wed", "Thu", "Fri"];
-  days.forEach(function (day) {
-    forecastHTML =
-      forecastHTML +
-      `       <div class="col-3">${day}</div>
+
+  forecast.forEach(function (forecastDay, index) {
+    if (index < 6) {
+      forecastHTML =
+        forecastHTML +
+        `       <div class="col-3">${formatForecastDay(forecastDay.dt)}</div>
               <div class="col-3">
                 <img
-                  src="http://openweathermap.org/img/wn/10d@2x.png"
+                  src="http://openweathermap.org/img/wn/${
+                    forecastDay.weather[0].icon
+                  }@2x.png"
                   alt=""
                   width="30"
                 />
               </div>
-              <div class="col-3">L: 9º</div>
-              <div class="col-3">H: 17º</div>
+              <div class="col-3">L: ${Math.round(forecastDay.temp.min)}º</div>
+              <div class="col-3">H: ${Math.round(forecastDay.temp.max)}º</div>
             `;
+    }
   });
-
   forecastHTML = forecastHTML + `</div>`;
   forecastElement.innerHTML = forecastHTML;
 }
+
+let apiKey = "0cbaf29abb695f5e4a49d0ed30f00cdc";
 
 let celsiusTemperature = null;
 
